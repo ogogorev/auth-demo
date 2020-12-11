@@ -1,15 +1,37 @@
 import { h } from 'preact';
 
 const Login = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    const formValue = {
+      login: e.target.elements.login.value,
+      password: e.target.elements.password.value,
+    }
+
+    console.log({ formValue })
+  };
+
+  const handleLoginChange = (e) => {};
+
   return (
     <div>
-      <form action="">
+      <form action="" onSubmit={handleSubmit}>
         <div>
-          <input type="text" />
+          <label htmlFor="login">Login</label>
+          <input
+            name="login"
+            type="text"
+            onChange={handleLoginChange}
+          />
         </div>
 
         <div>
-          <input type="text" />
+          <label htmlFor="password">Password</label>
+          <input
+            name="password"
+            type="password"
+          />
         </div>
 
         <button type="submit">
