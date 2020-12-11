@@ -1,6 +1,28 @@
 import { h } from 'preact';
+import { useState } from 'preact/hooks'
+
+function fakeLogin({ login, password }) {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      Math.random() > 0.3 ? res() : rej()
+    }, 1500);
+  })
+}
+
+function useLogin() {
+  const [isLoading, setIsLoading] = useState(false)
+  const login = async (value) => {
+    setIsLoading(true)
+    await fakeLogin(value)
+    setIsLoading(false)
+  }
+
+  return [isLoading, login]
+}
 
 const Login = () => {
+  const [isLoading, login] = useLogin();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -10,6 +32,8 @@ const Login = () => {
     }
 
     console.log({ formValue })
+
+    login(formValue)
   };
 
   const handleLoginChange = (e) => {};
@@ -34,8 +58,8 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit">
-          login
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? '...' : 'Login'}
         </button>
       </form>
     </div>
