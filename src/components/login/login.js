@@ -1,6 +1,7 @@
 import { h } from 'preact';
 
 import { useLogin } from '../../hooks/login';
+import style from './login.css'
 
 const Login = () => {
   const [isLoading, error, login] = useLogin();
@@ -21,9 +22,9 @@ const Login = () => {
   const handleLoginChange = (e) => {};
 
   return (
-    <div>
+    <div class={style.container}>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div class={style.inputBox}>
           <label htmlFor="login">Login</label>
           <input
             name="login"
@@ -32,7 +33,7 @@ const Login = () => {
           />
         </div>
 
-        <div>
+        <div class={style.inputBox}>
           <label htmlFor="password">Password</label>
           <input
             name="password"
@@ -40,7 +41,11 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit" disabled={isLoading}>
+        <button
+          type="submit"
+          class={style.submitButton}
+          disabled={isLoading}
+        >
           {isLoading ? '...' : 'Login'}
         </button>
 

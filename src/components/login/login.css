@@ -1,0 +1,26 @@
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputBox {
+  margin: 0 0 16px;
+}
+
+.inputBox label {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.inputBox input {
+  width: 100%;
+  display: block;
+  padding: 8px;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 4px 8px;
+}
