@@ -3,13 +3,16 @@ import { useState } from 'preact/hooks'
 function fakeLogin({ login, password }) {
   return new Promise((res, rej) => {
     setTimeout(() => {
-      Math.random() > 0.5 ? res() : rej()
+      Math.random() > 0.99 ?
+        res() :
+        rej(new Error(ERRORS.WRONG_CREDENTIALS))
     }, 1500);
   })
 }
 
 export const ERRORS = {
-  LOGIN_ERROR: 'LOGIN_ERROR',
+  WRONG_CREDENTIALS: 'WRONG_CREDENTIALS',
+  CONNECTION_ERROR: 'CONNECTION_ERROR',
 }
 
 export function useLogin() {
@@ -22,7 +25,7 @@ export function useLogin() {
     try {
       await fakeLogin(value)
     } catch (e) {
-      setError(ERRORS.LOGIN_ERROR)
+      setError(e.message)
     }
     setIsLoading(false)
   }
