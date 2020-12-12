@@ -5,7 +5,7 @@ import { useLogin, LOGIN_ERRORS } from '../../hooks/login';
 import style from './login.css'
 
 const LOGIN_FORM_ERRORS = {
-  EMAIL_INCORRECT: 'LOGIN_INCORRECT',
+  EMAIL_INCORRECT: 'EMAIL_INCORRECT',
 }
 
 const ERROR_MESSAGES_MAP = {
@@ -20,39 +20,46 @@ function validateEmail(email) {
 }
 
 const Login = () => {
-  const [isLoading, error, login] = useLogin();
-  const [loginInputState, setLoginInputState] = useState({ isInvalid: false })
-  const [passwordInputState, setPasswordInputState] = useState({ isInvalid: false })
+  const [isLoading, error, sendLogin] = useLogin();
+  const [login, setLogin] = useState({ value: '', isValid: true });
+  const [password, setPassword] = useState({ value: '', isValid: true });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    const formValue = {
-      login: e.target.elements.login.value,
-      password: e.target.elements.password.value,
+
+    if (isFormValid()) {
+      const formValue = { login: login.value, password: password.value };
+  
+      console.log({ formValue });
+  
+      sendLogin(formValue);
     }
-
-    console.log({ formValue })
-
-    login(formValue)
   };
 
   const handleLoginChange = (e) => {
-    const isValid = validateEmail(e.target.value)
-    setLoginInputState({
-      isInvalid: !isValid,
-      error: !isValid ? LOGIN_FORM_ERRORS.EMAIL_INCORRECT : null, 
-    })
+    const value = e.target.value;
+    const error = validateLogin(value);
+    setLogin({ value, isValid: !error, error });
   };
 
-  useEffect(() => {
-    if (error === LOGIN_ERRORS.WRONG_CREDENTIALS) {
-      setLoginInputState({ isInvalid: true })
-      setPasswordInputState({ isInvalid: true })
-    }
-  }, [error])
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    const error = validatePassword(value);
+    setPassword({ value, isValid: !error, error });
+  };
 
-  console.log('states', loginInputState, passwordInputState)
+  const validateLogin = (login) => {
+    const isValid = validateEmail(login);
+    if (!isValid) {
+      return { error: LOGIN_FORM_ERRORS.EMAIL_INCORRECT };
+    }
+  };
+
+  const validatePassword = (password) => {};
+
+  const isFormValid = () => {
+    return login.isValid && password.isValid;
+  };
 
   return (
     <div class={style.container}>
@@ -63,12 +70,13 @@ const Login = () => {
             name="login"
             type="text"
             onChange={handleLoginChange}
-            aria-invalid={loginInputState.isInvalid}
+            value={login.value}
+            aria-invalid={!login.isValid}
           />
 
-          {loginInputState.error && (
+          {login.error && (
             <p style={{ color: 'red' }}>
-              {ERROR_MESSAGES_MAP[loginInputState.error]}
+              {ERROR_MESSAGES_MAP[login.error]}
             </p>
           )}
         </div>
@@ -78,7 +86,9 @@ const Login = () => {
           <input
             name="password"
             type="password"
-            aria-invalid={passwordInputState.isInvalid}
+            value={password.value}
+            onChange={handlePasswordChange}
+            aria-invalid={!password.isValid}
           />
         </div>
 
@@ -87,6 +97,8 @@ const Login = () => {
             {ERROR_MESSAGES_MAP[error]}
           </p>
         )}
+
+        is form valid: {isFormValid()+''}
 
         <button
           type="submit"
