@@ -5,12 +5,12 @@ function fakeLogin({ login, password }) {
     setTimeout(() => {
       Math.random() > 0.99 ?
         res() :
-        rej(new Error(ERRORS.WRONG_CREDENTIALS))
+        rej(new Error(LOGIN_ERRORS.WRONG_CREDENTIALS))
     }, 1500);
   })
 }
 
-export const ERRORS = {
+export const LOGIN_ERRORS = {
   WRONG_CREDENTIALS: 'WRONG_CREDENTIALS',
   CONNECTION_ERROR: 'CONNECTION_ERROR',
 }

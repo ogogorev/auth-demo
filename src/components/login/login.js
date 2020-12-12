@@ -1,12 +1,22 @@
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
-import { useLogin, ERRORS } from '../../hooks/login';
+import { useLogin, LOGIN_ERRORS } from '../../hooks/login';
 import style from './login.css'
 
+const LOGIN_FORM_ERRORS = {
+  EMAIL_INCORRECT: 'LOGIN_INCORRECT',
+}
+
 const ERROR_MESSAGES_MAP = {
-  [ERRORS.WRONG_CREDENTIALS]: 'Your login and/or password do not match.',
-  [ERRORS.CONNECTION_ERROR]: 'Our server is currently unavailable. Please try again later.',
+  [LOGIN_ERRORS.WRONG_CREDENTIALS]: 'Your login and/or password do not match.',
+  [LOGIN_ERRORS.CONNECTION_ERROR]: 'Our server is currently unavailable. Please try again later.',
+  [LOGIN_FORM_ERRORS.EMAIL_INCORRECT]: 'Please enter a correct email address, e.g. username@example.com'
+}
+
+const emailRegExp = /^(?!.*\.\.)[\w.-]+@[\w-.]+[\w]{2}$/
+function validateEmail(email) {
+  return emailRegExp.test(email)
 }
 
 const Login = () => {
@@ -27,10 +37,16 @@ const Login = () => {
     login(formValue)
   };
 
-  const handleLoginChange = (e) => {};
+  const handleLoginChange = (e) => {
+    const isValid = validateEmail(e.target.value)
+    setLoginInputState({
+      isInvalid: !isValid,
+      error: !isValid ? LOGIN_FORM_ERRORS.EMAIL_INCORRECT : null, 
+    })
+  };
 
   useEffect(() => {
-    if (error === ERRORS.WRONG_CREDENTIALS) {
+    if (error === LOGIN_ERRORS.WRONG_CREDENTIALS) {
       setLoginInputState({ isInvalid: true })
       setPasswordInputState({ isInvalid: true })
     }
@@ -49,6 +65,12 @@ const Login = () => {
             onChange={handleLoginChange}
             aria-invalid={loginInputState.isInvalid}
           />
+
+          {loginInputState.error && (
+            <p style={{ color: 'red' }}>
+              {ERROR_MESSAGES_MAP[loginInputState.error]}
+            </p>
+          )}
         </div>
 
         <div class={style.inputBox}>
