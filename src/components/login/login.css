@@ -20,6 +20,10 @@
   padding: 8px;
 }
 
+.inputBox input[aria-invalid=true] {
+  border: 2px solid red;
+}
+
 .submitButton {
   width: 100%;
   padding: 4px 8px;
