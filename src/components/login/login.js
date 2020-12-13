@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
+import Error from '../form/error/error';
 import { useLogin, LOGIN_ERRORS } from '../../hooks/login';
 import style from './login.css';
 
@@ -123,17 +124,17 @@ const Login = () => {
           <input
             name="login"
             type="text"
+            placeholder="Email address"
             value={login.value}
             onChange={handleLoginChange}
             onFocus={() => setLogin({ isDirty: true })}
             aria-invalid={!login.isValid}
           />
 
-          {login.error && (
-            <p style={{ color: 'red' }}>
-              {ERROR_MESSAGES_MAP[login.error.error]}
-            </p>
-          )}
+          <Error
+            isDisplayed={login.error}
+            msg={ERROR_MESSAGES_MAP[login.error?.error]}
+          />
         </div>
 
         <div class={style.inputBox}>
@@ -141,24 +142,23 @@ const Login = () => {
           <input
             name="password"
             type="password"
+            placeholder="Password"
             value={password.value}
             onChange={handlePasswordChange}
             onFocus={() => setPassword({ isDirty: true })}
             aria-invalid={!password.isValid}
           />
 
-          {password.error && (
-            <p style={{ color: 'red' }}>
-              {ERROR_MESSAGES_MAP[password.error.error]}
-            </p>
-          )}
+          <Error
+            isDisplayed={password.error}
+            msg={ERROR_MESSAGES_MAP[password.error?.error]}
+          />
         </div>
 
-        {!isFormDirty() && error && (
-          <p style={{ color: 'red' }}>
-            {ERROR_MESSAGES_MAP[error]}
-          </p>
-        )}
+        <Error
+          isDisplayed={!isFormDirty() && error}
+          msg={ERROR_MESSAGES_MAP[error]}
+        />
 
         is form valid: {isFormValid()+''}
 
