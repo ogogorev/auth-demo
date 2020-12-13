@@ -24,7 +24,11 @@ function validateEmail(email) {
 }
 
 function useFormInput(initialValue) {
-  const [state, setState] = useState({ value: initialValue, isValid: true });
+  const [state, setState] = useState({
+    value: initialValue,
+    isValid: true,
+    isDirty: false,
+  });
   
   const update = (newState) => {
     setState(state => ({ ...state, ...newState }));
@@ -47,6 +51,8 @@ const Login = () => {
       const formValue = { login: login.value, password: password.value };
   
       console.log({ formValue });
+
+      makePristine();
   
       sendLogin(formValue);
     }
@@ -102,8 +108,11 @@ const Login = () => {
     return validateLogin() & validatePassword();
   };
 
-  const isFormValid = () => {
-    return login.isValid && password.isValid;
+  const isFormValid = () => login.isValid && password.isValid;
+  const isFormDirty = () => login.isDirty || password.isDirty;
+  const makePristine = () => {
+    setLogin({ isDirty: false });
+    setPassword({ isDirty: false });
   };
 
   return (
@@ -114,8 +123,9 @@ const Login = () => {
           <input
             name="login"
             type="text"
-            onChange={handleLoginChange}
             value={login.value}
+            onChange={handleLoginChange}
+            onFocus={() => setLogin({ isDirty: true })}
             aria-invalid={!login.isValid}
           />
 
@@ -133,6 +143,7 @@ const Login = () => {
             type="password"
             value={password.value}
             onChange={handlePasswordChange}
+            onFocus={() => setPassword({ isDirty: true })}
             aria-invalid={!password.isValid}
           />
 
@@ -143,7 +154,7 @@ const Login = () => {
           )}
         </div>
 
-        {error && (
+        {!isFormDirty() && error && (
           <p style={{ color: 'red' }}>
             {ERROR_MESSAGES_MAP[error]}
           </p>
