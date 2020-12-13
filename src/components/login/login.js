@@ -2,17 +2,21 @@ import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import { useLogin, LOGIN_ERRORS } from '../../hooks/login';
-import style from './login.css'
+import style from './login.css';
 
 const LOGIN_FORM_ERRORS = {
   EMAIL_INCORRECT: 'EMAIL_INCORRECT',
-}
+  LOGIN_REQUIRED: 'LOGIN_REQUIRED',
+  PASSWORD_REQUIRED: 'PASSWORD_REQUIRED',
+};
 
 const ERROR_MESSAGES_MAP = {
   [LOGIN_ERRORS.WRONG_CREDENTIALS]: 'Your login and/or password do not match.',
   [LOGIN_ERRORS.CONNECTION_ERROR]: 'Our server is currently unavailable. Please try again later.',
-  [LOGIN_FORM_ERRORS.EMAIL_INCORRECT]: 'Please enter a correct email address, e.g. username@example.com'
-}
+  [LOGIN_FORM_ERRORS.EMAIL_INCORRECT]: 'Please enter a correct email address, e.g. username@example.com',
+  [LOGIN_FORM_ERRORS.LOGIN_REQUIRED]: 'Login is required.',
+  [LOGIN_FORM_ERRORS.PASSWORD_REQUIRED]: 'Password is required.',
+};
 
 const emailRegExp = /^(?!.*\.\.)[\w.-]+@[\w-.]+[\w]{2}$/
 function validateEmail(email) {
@@ -24,10 +28,12 @@ const Login = () => {
   const [login, setLogin] = useState({ value: '', isValid: true });
   const [password, setPassword] = useState({ value: '', isValid: true });
 
+  console.log('render')
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (isFormValid()) {
+    if (validateForm()) {
       const formValue = { login: login.value, password: password.value };
   
       console.log({ formValue });
@@ -37,25 +43,54 @@ const Login = () => {
   };
 
   const handleLoginChange = (e) => {
-    const value = e.target.value;
-    const error = validateLogin(value);
-    setLogin({ value, isValid: !error, error });
+    updateLogin(e.target.value);
   };
-
+  
   const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    const error = validatePassword(value);
-    setPassword({ value, isValid: !error, error });
+    updatePassword(e.target.value);
   };
 
-  const validateLogin = (login) => {
-    const isValid = validateEmail(login);
-    if (!isValid) {
-      return { error: LOGIN_FORM_ERRORS.EMAIL_INCORRECT };
+  const validateLogin = (value) => {
+    value = value ?? login.value;
+    let error = null;
+
+    if (!value) {
+      error = LOGIN_FORM_ERRORS.LOGIN_REQUIRED;
     }
+  
+    if (!error && !validateEmail(value)) {
+      error = LOGIN_FORM_ERRORS.EMAIL_INCORRECT;
+    }
+
+    setLogin(login => ({ ...login, isValid: !error, error: { error } }));
+    return !error;
+  };
+  
+  const validatePassword = (value) => {
+    value = value ?? password.value;
+    let error = null;
+
+    if (!value) {
+      error = LOGIN_FORM_ERRORS.PASSWORD_REQUIRED;
+    }
+
+    setPassword(password => ({ ...password, isValid: !error, error : { error } }));
+    return !error;
+  };
+  
+  const updateLogin = (value) => {
+    setLogin({ value });
+    validateLogin(value);
   };
 
-  const validatePassword = (password) => {};
+  const updatePassword = (value) => {
+    setPassword({ value });
+    validatePassword(value);
+  };
+
+  const validateForm = () => {
+    return validateLogin() & validatePassword();
+  };
 
   const isFormValid = () => {
     return login.isValid && password.isValid;
@@ -76,7 +111,7 @@ const Login = () => {
 
           {login.error && (
             <p style={{ color: 'red' }}>
-              {ERROR_MESSAGES_MAP[login.error]}
+              {ERROR_MESSAGES_MAP[login.error.error]}
             </p>
           )}
         </div>
@@ -90,6 +125,12 @@ const Login = () => {
             onChange={handlePasswordChange}
             aria-invalid={!password.isValid}
           />
+
+          {password.error && (
+            <p style={{ color: 'red' }}>
+              {ERROR_MESSAGES_MAP[password.error.error]}
+            </p>
+          )}
         </div>
 
         {error && (
