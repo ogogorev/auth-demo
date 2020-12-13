@@ -18,3 +18,8 @@ html, body {
 #app {
 	height: 100%;
 }
+
+.hidden {
+	position: absolute;
+	opacity: 0;
+}

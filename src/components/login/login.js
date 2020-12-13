@@ -160,7 +160,11 @@ const Login = () => {
           msg={ERROR_MESSAGES_MAP[error]}
         />
 
-        is form valid: {isFormValid()+''}
+        <div role="alert">
+          {isLoading && (
+            <span class="hidden">Sending request</span>
+          )}
+        </div>
 
         <button
           type="submit"
