@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 
 import Error from '../form/error/error';
 import { useLogin, LOGIN_ERRORS } from '../../hooks/login';
@@ -118,11 +118,11 @@ const Login = () => {
 
   return (
     <div class={style.container}>
-      <form onSubmit={handleSubmit}>
+      <form class={style.form} onSubmit={handleSubmit}>
         <div class={style.inputBox}>
           <label htmlFor="login">Login</label>
           <input
-            name="login"
+            id="login"
             type="text"
             placeholder="Email address"
             value={login.value}
@@ -140,7 +140,7 @@ const Login = () => {
         <div class={style.inputBox}>
           <label htmlFor="password">Password</label>
           <input
-            name="password"
+            id="password"
             type="password"
             placeholder="Password"
             value={password.value}
@@ -171,9 +171,8 @@ const Login = () => {
           class={style.submitButton}
           disabled={isLoading}
         >
-          {isLoading ? '...' : 'Login'}
+          {isLoading ? '...' : 'LOGIN'}
         </button>
-        
       </form>
     </div>
   );

@@ -1,10 +1,12 @@
 import { h } from 'preact';
 
+import style from './error.css';
+
 const Error = ({ isDisplayed, msg }) => {
   return (
     <div role="alert">
       {isDisplayed && (
-        <p style={{ color: 'red' }}>
+        <p class={style.text}>
           {msg}
         </p>
       )}

@@ -5,7 +5,13 @@
   align-items: center;
 }
 
+.form {
+  width: 80%;
+  max-width: 320px;
+}
+
 .inputBox {
+  width: 100%;
   margin: 0 0 16px;
 }
 
@@ -17,14 +23,33 @@
 .inputBox input {
   width: 100%;
   display: block;
+  border: 2px solid var(--secondary-color);
+  border-radius: var(--border-radius);
   padding: 8px;
+
+  font-size: 16px;
 }
 
 .inputBox input[aria-invalid=true] {
-  border: 2px solid red;
+  border-color: var(--error-color);
+}
+
+.inputBox input:focus {
+  outline-color: var(--primary-color);
 }
 
 .submitButton {
   width: 100%;
-  padding: 4px 8px;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 10px;
+  
+  color: white;
+  background-color: var(--primary-light-color);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.submitButton:focus, .submitButton:hover {
+  background-color: var(--primary-color);
 }
