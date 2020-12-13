@@ -4,6 +4,7 @@ import { useState } from 'preact/hooks';
 import Error from '../form/error/error';
 import { useLogin, LOGIN_ERRORS } from '../../hooks/login';
 import style from './login.css';
+import { LoadingIndicator } from './loading-indicator';
 
 const LOGIN_FORM_ERRORS = {
   EMAIL_INCORRECT: 'EMAIL_INCORRECT',
@@ -171,7 +172,7 @@ const Login = () => {
           class={style.submitButton}
           disabled={isLoading}
         >
-          {isLoading ? '...' : 'LOGIN'}
+          {isLoading ? (<LoadingIndicator width={100} height={18} color="white" />) : 'LOGIN'}
         </button>
       </form>
     </div>
