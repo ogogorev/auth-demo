@@ -23,10 +23,20 @@ function validateEmail(email) {
   return emailRegExp.test(email)
 }
 
+function useFormInput(initialValue) {
+  const [state, setState] = useState({ value: initialValue, isValid: true });
+  
+  const update = (newState) => {
+    setState(state => ({ ...state, ...newState }));
+  };
+
+  return [state, update];
+}
+
 const Login = () => {
   const [isLoading, error, sendLogin] = useLogin();
-  const [login, setLogin] = useState({ value: '', isValid: true });
-  const [password, setPassword] = useState({ value: '', isValid: true });
+  const [login, setLogin] = useFormInput('');
+  const [password, setPassword] = useFormInput('');
 
   console.log('render')
 
@@ -62,7 +72,7 @@ const Login = () => {
       error = LOGIN_FORM_ERRORS.EMAIL_INCORRECT;
     }
 
-    setLogin(login => ({ ...login, isValid: !error, error: { error } }));
+    setLogin({ isValid: !error, error: { error } });
     return !error;
   };
   
@@ -74,7 +84,7 @@ const Login = () => {
       error = LOGIN_FORM_ERRORS.PASSWORD_REQUIRED;
     }
 
-    setPassword(password => ({ ...password, isValid: !error, error : { error } }));
+    setPassword({ isValid: !error, error : { error } });
     return !error;
   };
   
