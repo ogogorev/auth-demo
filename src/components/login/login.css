@@ -53,3 +53,16 @@
 .submitButton:focus, .submitButton:hover {
   background-color: var(--primary-color);
 }
+
+.animated {
+  animation: bouncing 400ms ease-out;
+}
+
+@keyframes bouncing {
+  10% { transform: translateX(-5px); }
+  30% { transform: translateX(5px); }
+  50% { transform: translateX(-5px); }
+  70% { transform: translateX(5px); }
+  90% { transform: translateX(-5px); }
+  100% { transform: translateX(0px); }
+}

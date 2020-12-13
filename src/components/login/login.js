@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useState } from 'preact/hooks';
+import { useState, useEffect, useRef } from 'preact/hooks';
 
 import Error from '../form/error/error';
 import { useLogin, LOGIN_ERRORS } from '../../hooks/login';
@@ -43,21 +43,24 @@ const Login = () => {
   const [isLoading, error, sendLogin] = useLogin();
   const [login, setLogin] = useFormInput('');
   const [password, setPassword] = useFormInput('');
+  const submitButtonRef = useRef(null);
 
   console.log('render')
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      const formValue = { login: login.value, password: password.value };
-  
-      console.log({ formValue });
+    removeSubmitErrorAnimation();
 
-      makePristine();
-  
-      sendLogin(formValue);
-    }
+    setTimeout(() => {
+      if (validateForm()) {
+        const formValue = { login: login.value, password: password.value };
+        makePristine();
+        sendLogin(formValue);
+      } else {
+        addSubmitErrorAnimation();
+      }
+    }, 0);
   };
 
   const handleLoginChange = (e) => {
@@ -117,6 +120,13 @@ const Login = () => {
     setPassword({ isDirty: false });
   };
 
+  const addSubmitErrorAnimation = () => submitButtonRef.current.classList.add(style.animated);
+  const removeSubmitErrorAnimation = () => submitButtonRef.current.classList.remove(style.animated);
+
+  useEffect(() => {
+    error ? addSubmitErrorAnimation() : removeSubmitErrorAnimation();
+  }, [error]);
+
   return (
     <div class={style.container}>
       <form class={style.form} onSubmit={handleSubmit}>
@@ -168,6 +178,7 @@ const Login = () => {
         </div>
 
         <button
+          ref={submitButtonRef}
           type="submit"
           class={style.submitButton}
           disabled={isLoading}
