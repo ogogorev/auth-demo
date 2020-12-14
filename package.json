@@ -8,7 +8,8 @@
     "serve": "sirv build --port 8080 --cors --single",
     "dev": "preact watch",
     "lint": "eslint src",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "preact build --dest=docs"
   },
   "eslintConfig": {
     "extends": "preact",
