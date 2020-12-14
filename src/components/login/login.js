@@ -13,7 +13,7 @@ const LOGIN_FORM_ERRORS = {
 };
 
 const ERROR_MESSAGES_MAP = {
-  [LOGIN_ERRORS.WRONG_CREDENTIALS]: 'Your login and/or password do not match.',
+  [LOGIN_ERRORS.WRONG_CREDENTIALS]: 'Your login and/or password do not match. Maybe you should try \'qwerty\' ;)',
   [LOGIN_ERRORS.CONNECTION_ERROR]: 'Our server is currently unavailable. Please try again later.',
   [LOGIN_FORM_ERRORS.EMAIL_INCORRECT]: 'Please enter a correct email address, e.g. username@example.com',
   [LOGIN_FORM_ERRORS.LOGIN_REQUIRED]: 'Login is required.',
