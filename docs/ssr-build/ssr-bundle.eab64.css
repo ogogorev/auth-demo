@@ -1,0 +1,114 @@
+/* theme */
+html {
+	--primary-color: #031927;
+	--primary-light-color: #073D5F;
+  --secondary-color: #DDD;
+	--error-color: #BA1200;
+
+	--border-radius: 4px;
+}
+/* ----- */
+
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	background: #FAFAFA;
+	font-family: 'Helvetica Neue', arial, sans-serif;
+	font-weight: 400;
+	color: var(--primary-color);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+#app {
+	height: 100%;
+}
+
+.hidden {
+	position: absolute;
+	opacity: 0;
+}
+
+.container {
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+}
+
+.button {
+  width: 100%;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 10px;
+  
+  color: white;
+  background-color: var(--primary-light-color);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.button:focus, .button:hover {
+  background-color: var(--primary-color);
+}
+
+.text__3yll8 {
+  color: var(--error-color);
+}
+.form__1mHMC {
+  width: 80%;
+  max-width: 320px;
+}
+
+.inputBox__yj3cK {
+  width: 100%;
+  margin: 0 0 16px;
+}
+
+.inputBox__yj3cK label {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.inputBox__yj3cK input {
+  width: 100%;
+  display: block;
+  border: 2px solid var(--secondary-color);
+  border-radius: var(--border-radius);
+  padding: 8px;
+
+  font-size: 16px;
+}
+
+.inputBox__yj3cK input[aria-invalid=true] {
+  border-color: var(--error-color);
+}
+
+.inputBox__yj3cK input:focus {
+  outline-color: var(--primary-color);
+}
+
+.animated__QDDln {
+  animation: bouncing__3Degz 400ms ease-out;
+}
+
+@keyframes bouncing__3Degz {
+  10% { transform: translateX(-5px); }
+  30% { transform: translateX(5px); }
+  50% { transform: translateX(-5px); }
+  70% { transform: translateX(5px); }
+  90% { transform: translateX(-5px); }
+  100% { transform: translateX(0px); }
+}
+
+
+/*# sourceMappingURL=ssr-bundle.eab64.css.map*/
