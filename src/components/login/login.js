@@ -39,8 +39,8 @@ function useFormInput(initialValue) {
   return [state, update];
 }
 
-const Login = () => {
-  const [isLoading, error, sendLogin] = useLogin();
+const Login = ({ onLogin }) => {
+  const [isLoading, error, sendLogin] = useLogin(() => onLogin());
   const [login, setLogin] = useFormInput('');
   const [password, setPassword] = useFormInput('');
   const submitButtonRef = useRef(null);
