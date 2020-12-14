@@ -7,13 +7,13 @@ const App = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	return (
-		<div id="app">
+		<div id="app" class="container">
 			{!isLoggedIn && (<Login onLogin={() => setIsLoggedIn(true)} />)}
 
 			{isLoggedIn && (
 				<div>
 					<p>You have successfully logged in :)</p>
-					<button onClick={() => setIsLoggedIn(false)}>Try again</button>
+					<button class="button" onClick={() => setIsLoggedIn(false)}>Try again</button>
 				</div>
 			)}
 		</div>

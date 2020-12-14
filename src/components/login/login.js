@@ -128,65 +128,63 @@ const Login = ({ onLogin }) => {
   }, [error]);
 
   return (
-    <div class={style.container}>
-      <form class={style.form} onSubmit={handleSubmit}>
-        <div class={style.inputBox}>
-          <label htmlFor="login">Login</label>
-          <input
-            id="login"
-            type="text"
-            placeholder="Email address"
-            value={login.value}
-            onChange={handleLoginChange}
-            onFocus={() => setLogin({ isDirty: true })}
-            aria-invalid={!login.isValid}
-          />
-
-          <Error
-            isDisplayed={login.error}
-            msg={ERROR_MESSAGES_MAP[login.error?.error]}
-          />
-        </div>
-
-        <div class={style.inputBox}>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Password"
-            value={password.value}
-            onChange={handlePasswordChange}
-            onFocus={() => setPassword({ isDirty: true })}
-            aria-invalid={!password.isValid}
-          />
-
-          <Error
-            isDisplayed={password.error}
-            msg={ERROR_MESSAGES_MAP[password.error?.error]}
-          />
-        </div>
-
-        <Error
-          isDisplayed={!isFormDirty() && error}
-          msg={ERROR_MESSAGES_MAP[error]}
+    <form class={style.form} onSubmit={handleSubmit}>
+      <div class={style.inputBox}>
+        <label htmlFor="login">Login</label>
+        <input
+          id="login"
+          type="text"
+          placeholder="Email address"
+          value={login.value}
+          onChange={handleLoginChange}
+          onFocus={() => setLogin({ isDirty: true })}
+          aria-invalid={!login.isValid}
         />
 
-        <div role="alert">
-          {isLoading && (
-            <span class="hidden">Sending request</span>
-          )}
-        </div>
+        <Error
+          isDisplayed={login.error}
+          msg={ERROR_MESSAGES_MAP[login.error?.error]}
+        />
+      </div>
 
-        <button
-          ref={submitButtonRef}
-          type="submit"
-          class={style.submitButton}
-          disabled={isLoading}
-        >
-          {isLoading ? (<LoadingIndicator width={100} height={18} color="white" />) : 'LOGIN'}
-        </button>
-      </form>
-    </div>
+      <div class={style.inputBox}>
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Password"
+          value={password.value}
+          onChange={handlePasswordChange}
+          onFocus={() => setPassword({ isDirty: true })}
+          aria-invalid={!password.isValid}
+        />
+
+        <Error
+          isDisplayed={password.error}
+          msg={ERROR_MESSAGES_MAP[password.error?.error]}
+        />
+      </div>
+
+      <Error
+        isDisplayed={!isFormDirty() && error}
+        msg={ERROR_MESSAGES_MAP[error]}
+      />
+
+      <div role="alert">
+        {isLoading && (
+          <span class="hidden">Sending request</span>
+        )}
+      </div>
+
+      <button
+        ref={submitButtonRef}
+        type="submit"
+        class="button"
+        disabled={isLoading}
+      >
+        {isLoading ? (<LoadingIndicator width={100} height={18} color="white" />) : 'LOGIN'}
+      </button>
+    </form>
   );
 }
 

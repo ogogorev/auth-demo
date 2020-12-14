@@ -1,10 +1,3 @@
-.container {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .form {
   width: 80%;
   max-width: 320px;
@@ -36,22 +29,6 @@
 
 .inputBox input:focus {
   outline-color: var(--primary-color);
-}
-
-.submitButton {
-  width: 100%;
-  border: none;
-  border-radius: var(--border-radius);
-  padding: 10px;
-  
-  color: white;
-  background-color: var(--primary-light-color);
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.submitButton:focus, .submitButton:hover {
-  background-color: var(--primary-color);
 }
 
 .animated {
