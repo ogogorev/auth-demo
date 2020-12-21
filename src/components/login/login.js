@@ -133,7 +133,7 @@ const Login = ({ onLogin }) => {
         <label htmlFor="login">Login</label>
         <input
           id="login"
-          type="text"
+          type="email"
           placeholder="Email address"
           value={login.value}
           onChange={handleLoginChange}
