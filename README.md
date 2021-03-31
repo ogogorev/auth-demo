@@ -1,5 +1,7 @@
 # auth
 
+Basic authentication form implemented using Preact.
+
 ## CLI Commands
 
 ``` bash
