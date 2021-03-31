@@ -2,6 +2,8 @@
 
 Basic authentication form implemented using Preact.
 
+[Take a look at the deployed version](https://ogogorev.github.io/auth-demo/)
+
 ## CLI Commands
 
 ``` bash
